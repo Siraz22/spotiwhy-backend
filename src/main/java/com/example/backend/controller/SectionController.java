@@ -38,14 +38,14 @@ public class SectionController {
         sectionService.addSection(section);
     }
 
-    @DeleteMapping(path="/deleteSection")
-    public ResponseEntity<?> deleteSection(String id){
+    @DeleteMapping(path="/deleteSection/{sectionId}")
+    public ResponseEntity<?> deleteSection(@PathVariable("sectionId") String id){
         sectionService.deleteSection(id);
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping(path="/updateSection")
-    public ResponseEntity<?> updateSection(String id, Section section){
+    @PutMapping(path="/updateSection/{sectionId}")
+    public ResponseEntity<?> updateSection(@PathVariable("sectionId") String id, Section section){
         sectionService.updateSection(id, section);
         return ResponseEntity.ok().build();
     }

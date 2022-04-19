@@ -29,6 +29,6 @@ public class Song {
     //ie, in this case, if we assign a song to a session using session's repository, the song will be saved to the database regardless.
 
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "songs_set")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "songs_set")
     private Set<Section> sections_set = new HashSet<>();
 }

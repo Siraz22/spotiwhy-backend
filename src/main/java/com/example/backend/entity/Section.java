@@ -24,7 +24,7 @@ public class Section {
     @Column(name="section_ownerid")
     private String sectionOwnerId;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name="section_songs",
         joinColumns = @JoinColumn(name="section_id"),
         inverseJoinColumns = @JoinColumn(name="song_id")

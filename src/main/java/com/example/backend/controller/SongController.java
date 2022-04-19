@@ -1,5 +1,6 @@
 package com.example.backend.controller;
 import com.example.backend.entity.Song;
+import com.example.backend.service.SectionService;
 import com.example.backend.service.SongService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ public class SongController {
 
     @Autowired
     final private SongService songService;
+    @Autowired
+    final private SectionService sectionService;
 
     @GetMapping(path="/songs")
     public ResponseEntity<List<Song>> getSongs(){
@@ -34,20 +37,28 @@ public class SongController {
         songService.addSongToSection(song.getSongID(),"defaultSection");
     }
 
-    @DeleteMapping(path="/deleteSong")
-    public ResponseEntity<?> deleteSong(String id){
+//    @DeleteMapping(path="/deleteSong/songId")
+//    public ResponseEntity<?> deleteSong(@PathVariable("songId") String id){
+//        songService.deleteSong(id);
+//        return ResponseEntity.ok().build();
+//    }
+
+    @DeleteMapping(path="/deleteSong/{songId}")
+    public void deleteSong(@PathVariable("songId") String id){
+        //First remove the song from it's parent, ie, the sections that contain this song
+        sectionService.removeSongFromSections(id);
+        //Now delete the song
         songService.deleteSong(id);
-        return ResponseEntity.ok().build();
     }
 
-    @PutMapping(path="/updateSong")
-    public ResponseEntity<?> updateSong(String id, Song song) {
+    @PutMapping(path="/updateSong/{songId}")
+    public ResponseEntity<?> updateSong(@PathVariable("songId") String id, @RequestBody Song song) {
         songService.updateSong(id, song);
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping(path="/addSongToSection")
-    public ResponseEntity<?> songToSection(String songId, String sectionId){
+    @PostMapping(path="/addSongToSection/{songId}/{sectionId}")
+    public ResponseEntity<?> songToSection(@PathVariable("songId") String songId,@PathVariable("sectionId") String sectionId){
         songService.addSongToSection(songId, sectionId);
         return ResponseEntity.ok().build();
     }
