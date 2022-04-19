@@ -43,21 +43,4 @@ public class SectionService {
         existingSection.setSectionPhotoURL(section.getSectionPhotoURL());
     }
 
-    //reference = https://stackoverflow.com/questions/1082095/how-to-remove-entity-with-manytomany-relationship-in-jpa-and-corresponding-join/14911910#14911910
-    @PreRemove
-    public void removeSongFromSections(String songId){
-        Song songToDelete = songRepo.findById(songId).orElseThrow(()-> new IllegalStateException("Song with this id doesn't exist"));
-        List<Section> localSections = sectionRepo.findAll();
-
-        for(Section section : sectionRepo.findAll()){
-            log.info("Section before" + String.valueOf(section.getSongs_set()));
-            if(section.getSongs_set().contains(songToDelete)){
-                section.getSongs_set().remove(songToDelete);
-            }
-            log.info("Section after" + String.valueOf(section.getSongs_set()));
-        }
-
-
-    }
-
 }

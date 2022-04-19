@@ -46,7 +46,7 @@ public class SongController {
     @DeleteMapping(path="/deleteSong/{songId}")
     public void deleteSong(@PathVariable("songId") String id){
         //First remove the song from it's parent, ie, the sections that contain this song
-        sectionService.removeSongFromSections(id);
+        songService.removeSongFromSections(id);
         //Now delete the song
         songService.deleteSong(id);
     }
@@ -62,4 +62,5 @@ public class SongController {
         songService.addSongToSection(songId, sectionId);
         return ResponseEntity.ok().build();
     }
+
 }

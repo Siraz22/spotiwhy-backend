@@ -4,15 +4,18 @@ import com.example.backend.entity.Song;
 import com.example.backend.repo.SectionRepo;
 import com.example.backend.repo.SongRepo;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.PreRemove;
 import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class SongService {
 
     @Autowired
@@ -42,6 +45,21 @@ public class SongService {
 
             //This can be commented out, and still we will get the required normalized table - read more
             //existingSong.getSections_set().add(existingSection);
+        }
+    }
+
+    //reference = https://stackoverflow.com/questions/1082095/how-to-remove-entity-with-manytomany-relationship-in-jpa-and-corresponding-join/14911910#14911910
+    @PreRemove
+    public void removeSongFromSections(String songId){
+        Song songToDelete = songRepo.findById(songId).orElseThrow(()-> new IllegalStateException("Song with this id doesn't exist"));
+        List<Section> localSections = sectionRepo.findAll();
+
+        for(Section section : sectionRepo.findAll()){
+            log.info("Section before" + String.valueOf(section.getSongs_set()));
+            if(section.getSongs_set().contains(songToDelete)){
+                section.getSongs_set().remove(songToDelete);
+            }
+            log.info("Section after" + String.valueOf(section.getSongs_set()));
         }
     }
 
