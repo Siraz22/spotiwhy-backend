@@ -28,7 +28,7 @@ public class SongService {
     }
 
     public void deleteSong(String id){
-        //Song has already been removed from it's parent sections via the controller class calling service method of Section
+        //Song has already been removed from its parent sections via the controller class calling service method of Section
         songRepo.deleteById(id);
     }
 
