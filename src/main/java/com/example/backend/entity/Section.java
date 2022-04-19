@@ -1,5 +1,6 @@
 package com.example.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,7 +26,9 @@ public class Section {
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name="section_songs",
-    joinColumns = {@JoinColumn(name="section_id")},
-    inverseJoinColumns = {@JoinColumn(name="song_id")})
+        joinColumns = @JoinColumn(name="section_id"),
+        inverseJoinColumns = @JoinColumn(name="song_id")
+    )
     private Set<Song> songs_set = new HashSet<>();
+
 }

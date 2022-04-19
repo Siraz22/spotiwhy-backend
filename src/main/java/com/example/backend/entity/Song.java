@@ -1,5 +1,6 @@
 package com.example.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,11 @@ public class Song {
     private String songName;
     @Column(name="song_artist")
     private String songArtist;
+
+    //NOTE : the manytomany attribute that doesn't have join column tag needn't be saved with its own repository.
+    //ie, in this case, if we assign a song to a session using session's repository, the song will be saved to the database regardless.
+
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "songs_set")
     private Set<Section> sections_set = new HashSet<>();
 }

@@ -1,15 +1,17 @@
 package com.example.backend.controller;
 
+import com.example.backend.entity.Section;
 import com.example.backend.service.SectionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(path="/api/v1/")
+//@RequestMapping(path="/api/v1/")
 public class SectionController {
 
     @Autowired
@@ -20,4 +22,31 @@ public class SectionController {
         return "Hello World";
     }
 
+    @GetMapping(path="/sections")
+    public ResponseEntity<List<Section>> getSections(){
+        return ResponseEntity.ok().body(sectionService.getSections());
+    }
+
+//    @PostMapping(path="/addSection")
+//    public ResponseEntity<?> addSection(Section section){
+//        sectionService.addSection(section);
+//        return ResponseEntity.ok().build();
+//    }
+
+    @PostMapping(path="/addSection")
+    public void addSection(@RequestBody Section section){
+        sectionService.addSection(section);
+    }
+
+    @DeleteMapping(path="/deleteSection")
+    public ResponseEntity<?> deleteSection(String id){
+        sectionService.deleteSection(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping(path="/updateSection")
+    public ResponseEntity<?> updateSection(String id, Section section){
+        sectionService.updateSection(id, section);
+        return ResponseEntity.ok().build();
+    }
 }
