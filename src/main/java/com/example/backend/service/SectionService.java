@@ -28,6 +28,11 @@ public class SectionService {
         return sectionRepo.findAll();
     }
 
+    public Section getSectionById(String id){
+        Section section = sectionRepo.findById(id).orElseThrow(()->new IllegalStateException("This id doens't exist"));
+        return section;
+    }
+
     public void deleteSection(String id){
         sectionRepo.deleteById(id);
     }

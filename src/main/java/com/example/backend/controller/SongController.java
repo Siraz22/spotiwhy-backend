@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequiredArgsConstructor
 public class SongController {
@@ -34,7 +35,9 @@ public class SongController {
     @PostMapping(path="/addSong")
     public void addSong(@RequestBody Song song){
         songService.addSong(song);
-        songService.addSongToSection(song.getSongID(),"defaultSection");
+
+        //No need for default section now; getSongs() works as good as a default list anyway
+        //songService.addSongToSection(song.getSongID(),"defaultSection");
     }
 
 //    @DeleteMapping(path="/deleteSong/songId")

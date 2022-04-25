@@ -4,6 +4,7 @@ import com.example.backend.entity.Section;
 import com.example.backend.entity.Song;
 import com.example.backend.repo.SectionRepo;
 import com.example.backend.repo.SongRepo;
+import com.example.backend.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -19,6 +20,8 @@ public class BackendApplication implements CommandLineRunner{
 	private SongRepo songRepo;
 	@Autowired
 	private SectionRepo sectionRepo;
+	@Autowired
+	private SongService songService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(BackendApplication.class, args);
@@ -27,30 +30,23 @@ public class BackendApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 
-//		Section section1 = new Section("sectionid1","section1","photourl","owner1",new HashSet<>());
-//		Section section2 = new Section("sectionid2","section2","photourl","owner1",new HashSet<>());
-//
-//		Song song0 = new Song("songid0","url0","song0","artist1",new HashSet<>());
-//		Song song1 = new Song("songid1","url1","song1","artist2",new HashSet<>());
-//
-//		section1.getSongs_set().add(song0);
-//		section1.getSongs_set().add(song1);
-//		section2.getSongs_set().add(song0);
-//
-//		//song1.getSections_set().add(section1);
-//		//song2.getSections_set().add(section1);
-//		//song1.getSections_set().add(section2);
-//
-//		this.sectionRepo.save(section1);
-//		this.sectionRepo.save(section2);
-//
-//
+		Section acousticSection = new Section("acoustic", "Acoustic Section", "","siraz",new HashSet<>());
+		Section soloSection = new Section("solo", "Solo Artist", "","siraz",new HashSet<>());
+		Song song1 = new Song("songid1","https://www.youtube.com/watch?v=C1azs50n5r0","I don't care","Eddie Van Deer Meer",new HashSet<>());
+		Song song2 = new Song("songid2","https://www.youtube.com/watch?v=9KAQaKydqA0","Daydreamer","Aurora",new HashSet<>());
 
-		Section defaultSection = new Section("defaultSection", "Default Section", "","siraz",new HashSet<>());
-		//Song song2 = new Song("songid2","url2","song2","artist1",new HashSet<>());
+		this.sectionRepo.save(acousticSection);
+		this.sectionRepo.save(soloSection);
+		this.songRepo.save(song1);
+		this.songRepo.save(song2);
 
-		this.sectionRepo.save(defaultSection);
-		//this.songRepo.save(song2);
+//		acousticSection.getSongs_set().add(song1);
+//		acousticSection.getSongs_set().add(song2);
+//		soloSection.getSongs_set().add(song1);
+
+		songService.addSongToSection("songid1", "acoustic");
+		songService.addSongToSection("songid1", "solo");
+		songService.addSongToSection("songid2", "acoustic");
 
 	}
 }

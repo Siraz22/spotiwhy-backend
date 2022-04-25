@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequiredArgsConstructor
 //@RequestMapping(path="/api/v1/")
@@ -25,6 +26,11 @@ public class SectionController {
     @GetMapping(path="/sections")
     public ResponseEntity<List<Section>> getSections(){
         return ResponseEntity.ok().body(sectionService.getSections());
+    }
+
+    @GetMapping(path="/section/{sectionId}")
+    public ResponseEntity<Section> getSectionById(@PathVariable("sectionId") String id){
+        return ResponseEntity.ok().body(sectionService.getSectionById(id));
     }
 
 //    @PostMapping(path="/addSection")
