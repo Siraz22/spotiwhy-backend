@@ -24,6 +24,8 @@ public class Song {
     private String songName;
     @Column(name="song_artist")
     private String songArtist;
+    @Column(name="song_photo_url")
+    private String songPhotoUrl;
 
     //NOTE : the manytomany attribute that doesn't have join column tag needn't be saved with its own repository.
     //ie, in this case, if we assign a song to a session using session's repository, the song will be saved to the database regardless.

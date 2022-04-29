@@ -23,6 +23,8 @@ public class Section {
     private String sectionPhotoURL;
     @Column(name="section_ownerid")
     private String sectionOwnerId;
+    @Column(name="seciton_description")
+    private String sectionDescription;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name="section_songs",

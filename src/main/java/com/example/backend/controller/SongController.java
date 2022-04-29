@@ -66,4 +66,9 @@ public class SongController {
         return ResponseEntity.ok().build();
     }
 
+    @DeleteMapping(path="/removeSongFromSection/{songId}/{sectionId}")
+    public void removeSongFromSection(@PathVariable("songId") String songId, @PathVariable("sectionId") String sectionId){
+        songService.removeSongFromSections(songId);
+    }
+
 }
