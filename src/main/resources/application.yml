@@ -1,0 +1,29 @@
+# Common
+spring:
+  profiles:
+    active: dev
+  main:
+    allow-bean-definition-overriding: true
+  jpa:
+    hibernate:
+      ddl-auto: update
+logging:
+  level:
+    org:
+      springframework:
+        web: INFO
+      hibernate: INFO
+
+# Development
+---
+spring:
+  config:
+    activate:
+      on-profile: "dev"
+  datasource:
+    url: ${DB_URL}
+    username: postgres
+    password: root1234
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database: POSTGRESQL
